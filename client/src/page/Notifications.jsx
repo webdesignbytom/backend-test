@@ -14,20 +14,16 @@ function Notifications() {
     type: 'PURCHASE',
     content: 'testing',
   });
-  console.log('all notifications', allNotifications);
-console.log('CREATED', createdSuccess);
+
   useEffect(() => {
     client
       .get(`/notifications`)
       .then((res) => {
-        console.log('note res', res.data);
         setAllNotifications(res.data.data.notifications);
         const seenNotes = res.data.data.notifications.filter((notification) => notification.viewed === true);
         setViewedNotifications(seenNotes)
-        console.log('seen notes', seenNotes);
         const unseenNotes = res.data.data.notifications.filter((notification) => notification.viewed === false);
         setUnSeenNotifications(unseenNotes)
-        console.log('unseen notes', unseenNotes);
       })
       .catch((err) => {
         console.error('Unable to get notifications', err);
@@ -38,21 +34,17 @@ console.log('CREATED', createdSuccess);
     client
       .post(`/notifications/create`, testForm, false)
       .then((res) => {
-        console.log('new notes', res.data);
         setCreatedSuccess(res.data.data.createdNotification)
       })
       .catch((err) => {
-        console.error('Unable to get notifications', err);
+        console.error('Unable to create notification', err);
       });
   };
 
   const markSeen = (note) => {
-    console.log('mark', note.id);
-
     client
       .put(`/notifications/viewed/${note.id}`, testForm)
       .then((res) => {
-        console.log('new notes', res.data);
         const newNote = allNotifications.filter(
           (note) => note.id === res.data.data.notification.id
         );
@@ -62,7 +54,6 @@ console.log('CREATED', createdSuccess);
         const newUnseenArray = unSeenNotifications.filter(
           (note) => note.id !== res.data.data.notification.id
         );
-        console.log('newUnseenArray', newUnseenArray);
         setUnSeenNotifications(newUnseenArray)
         setViewedNotifications([
             ...viewedNotifications,
@@ -70,21 +61,18 @@ console.log('CREATED', createdSuccess);
         ])
       })
       .catch((err) => {
-        console.error('Unable to get notifications', err);
+        console.error('Unable to mark notification as seen', err);
       });
   };
 
   const deleteNotification = (note) => {
-    console.log('delete', note.id);
-
     client
       .delete(`/notifications/delete/${note.id}`)
       .then((res) => {
-        console.log('new notes', res.data);
         setDeletedNote(res.data.data.notification);
       })
       .catch((err) => {
-        console.error('Unable to get notifications', err);
+        console.error('Unable to delete notification', err);
       });
   };
   return (
