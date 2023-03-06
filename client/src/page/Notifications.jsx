@@ -56,8 +56,8 @@ function Notifications() {
         );
         setUnSeenNotifications(newUnseenArray)
         setViewedNotifications([
-            ...viewedNotifications,
-            newNote[0]
+            newNote[0],
+            ...viewedNotifications
         ])
       })
       .catch((err) => {
