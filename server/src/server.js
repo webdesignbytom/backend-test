@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Set the port and URl
 const PORT = process.env.PORT 
-const HTTP_URL = process.env.HTTP_URL  || 'https://backend-test-it01me3aa-webdesignbytom.vercel.app/'
+const HTTP_URL = process.env.HTTP_URL 
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
