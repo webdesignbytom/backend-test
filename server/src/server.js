@@ -2,6 +2,9 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+// Path
+import { join } from 'path';
+import * as url from 'url';
 
 import notificationRouter from './routes/notifications.js'
 
@@ -16,9 +19,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // Set the port and URl
 const PORT = process.env.PORT 
-const HTTP_URL = process.env.HTTP_URL 
+const HTTP_URL = process.env.HTTP_URL  || 'https://backend-test-it01me3aa-webdesignbytom.vercel.app/'
 
-app.use('/')
+// Server interface page
+app.get('/', (req, res) => {
+  res.sendFile('index.html', {
+    root: join(__dirname, '..', 'views'),
+  });
+});
+
 app.use('/notifications', notificationRouter);
 
 // Start our API server
