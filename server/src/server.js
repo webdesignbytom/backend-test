@@ -15,10 +15,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Set the port and URl
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT 
 const HTTP_URL = process.env.HTTP_URL 
 
-
+app.use('/')
 app.use('/notifications', notificationRouter);
 
 // Start our API server
